@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useRiskAssessmentSession } from "@/hooks/use-risk-assessment-session";
+import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -60,22 +62,26 @@ interface RiskAssessmentProps {
 }
 
 export function RiskAssessment({ onComplete }: RiskAssessmentProps) {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const {
+    currentQuestion,
+    answers,
+    answerQuestion,
+    nextQuestion,
+    previousQuestion,
+    resetSession,
+  } = useRiskAssessmentSession(questions.length);
   const [isComplete, setIsComplete] = useState(false);
+  const { toast } = useToast();
 
   const progress = ((currentQuestion + 1) / questions.length) * 100;
 
   const handleAnswerChange = (value: string) => {
-    setAnswers(prev => ({
-      ...prev,
-      [questions[currentQuestion].id]: value
-    }));
+    answerQuestion(questions[currentQuestion].id, value);
   };
 
   const handleNext = () => {
     if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(prev => prev + 1);
+      nextQuestion();
     } else {
       calculateRiskProfile();
     }
@@ -83,7 +89,7 @@ export function RiskAssessment({ onComplete }: RiskAssessmentProps) {
 
   const handlePrevious = () => {
     if (currentQuestion > 0) {
-      setCurrentQuestion(prev => prev - 1);
+      previousQuestion();
     }
   };
 
@@ -104,7 +110,14 @@ export function RiskAssessment({ onComplete }: RiskAssessmentProps) {
     }
 
     setIsComplete(true);
-    setTimeout(() => onComplete(profile), 1500);
+    toast({
+      title: "Perfil calculado!",
+      description: "Analisando suas respostas e definindo sua carteira ideal...",
+    });
+    setTimeout(() => {
+      onComplete(profile);
+      resetSession();
+    }, 1500);
   };
 
   const currentAnswer = answers[questions[currentQuestion].id];
@@ -143,7 +156,7 @@ export function RiskAssessment({ onComplete }: RiskAssessmentProps) {
   return (
     <div className="max-w-2xl mx-auto">
       <div className="mb-6">
-        <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center justify-between mb-2" role="status" aria-live="polite">
           <span className="text-sm font-medium">
             Pergunta {currentQuestion + 1} de {questions.length}
           </span>
