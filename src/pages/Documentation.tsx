@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { 
   Book, 
   Code, 
@@ -15,8 +16,18 @@ import {
 } from "lucide-react";
 
 export function Documentation() {
+  const allowYFinance = import.meta.env.ALLOW_YFINANCE === "true";
+
   return (
     <div className="max-w-6xl mx-auto space-y-8">
+      {allowYFinance && (
+        <Alert className="border-yellow-400 bg-yellow-50">
+          <AlertTitle>Aviso</AlertTitle>
+          <AlertDescription>
+            Dados obtidos via yfinance são utilizados apenas para fins educacionais.
+          </AlertDescription>
+        </Alert>
+      )}
       {/* Header */}
       <div className="text-center space-y-4">
         <h1 className="text-4xl font-bold">Documentação</h1>
