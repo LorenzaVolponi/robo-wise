@@ -10,4 +10,16 @@ def get_yfinance_provider():
     return YFinanceProvider
 
 
-__all__ = ["DataProvider", "OHLCV", "get_yfinance_provider"]
+def get_alpha_vantage_provider():
+    """Return the :class:`AlphaVantageProvider` class via a local import."""
+    from .alpha_vantage_driver import AlphaVantageProvider
+
+    return AlphaVantageProvider
+
+
+__all__ = [
+    "DataProvider",
+    "OHLCV",
+    "get_yfinance_provider",
+    "get_alpha_vantage_provider",
+]
