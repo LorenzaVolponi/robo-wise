@@ -1,0 +1,7 @@
+{
+  "functions": { "api/*.py": { "runtime": "python3.11", "maxDuration": 60 } },
+  "crons": [
+    { "path": "/api/cron-refresh", "schedule": "0 2 * * *" },
+    { "path": "/api/cron-rebalance", "schedule": "0 12 * * 1" }
+  ]
+}
