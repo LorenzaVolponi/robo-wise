@@ -39,7 +39,7 @@ export function Navigation({ currentStep, onStepChange }: NavigationProps) {
                   currentStep === step.id && "bg-gradient-primary text-primary-foreground shadow-glow"
                 )}
               >
-                <span className="font-medium">{step.label}</span>
+                <span className="font-medium text-xs">{step.label}</span>
                 <span className="text-xs opacity-80">{step.description}</span>
               </Button>
             ))}

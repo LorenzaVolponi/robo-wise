@@ -233,6 +233,12 @@ const Index = () => {
           </div>
         )}
 
+        {currentStep === 3 && (
+          <div>
+            <BacktestResults />
+          </div>
+        )}
+
         {currentStep === 4 && (
           <div>
             <StrategyComparison />
@@ -242,12 +248,6 @@ const Index = () => {
         {currentStep === 5 && (
           <div>
             <RiskManagement />
-          </div>
-        )}
-
-        {currentStep === 6 && (
-          <div>
-            <Documentation />
           </div>
         )}
       </div>
