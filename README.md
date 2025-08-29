@@ -71,3 +71,14 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+## Robo-Advisor Features
+
+This project explores building a research-friendly robo-advisor inspired by [Yieldstreet's overview of robo-advisors](https://www.yieldstreet.com/blog/article/robo-advisor/). Core components include:
+
+- Pluggable market data providers with caching and optional paid integrations.
+- A `BacktestEngine` powered by the `backtesting` library for quick strategy evaluation.
+- Risk-adjusted metrics such as the Deflated Sharpe Ratio.
+- Clear educational-use disclaimer when relying on free sources like yfinance.
+
+These pieces serve as building blocks toward a full-featured, automated portfolio tool.
