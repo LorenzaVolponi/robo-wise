@@ -16,7 +16,7 @@ class OHLCV:
     high: float
     low: float
     close: float
-    volume: float
+    volume: int
 
 
 class DataProvider(Protocol):
