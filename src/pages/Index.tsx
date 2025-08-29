@@ -14,7 +14,7 @@ import heroImage from "@/assets/hero-image.jpg";
 type RiskProfile = 'conservative' | 'moderate' | 'aggressive';
 
 const Index = () => {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(0);
   const [riskProfile, setRiskProfile] = useState<RiskProfile | null>(null);
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(false);
 
@@ -55,7 +55,7 @@ const Index = () => {
   };
 
   // Hero Section (when no onboarding completed)
-  if (!hasCompletedOnboarding && currentStep === 1) {
+  if (!hasCompletedOnboarding && currentStep === 0) {
     return (
       <div className="min-h-screen bg-gradient-hero">
         <Navigation currentStep={currentStep} onStepChange={setCurrentStep} />

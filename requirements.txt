@@ -9,3 +9,4 @@ yfinance
 httpx
 ipython
 pytest-mock
+requests
