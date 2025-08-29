@@ -13,6 +13,11 @@ import heroImage from "@/assets/hero-image.jpg";
 
 type RiskProfile = 'conservative' | 'moderate' | 'aggressive';
 
+interface BacktestAsset {
+  symbol: string;
+  weight: number;
+}
+
 const Index = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [riskProfile, setRiskProfile] = useState<RiskProfile | null>(null);
@@ -24,7 +29,7 @@ const Index = () => {
     setCurrentStep(2);
   };
 
-  const handleRunBacktest = (assets: any[]) => {
+  const handleRunBacktest = (assets: BacktestAsset[]) => {
     // Simulate backtest execution
     console.log('Running backtest with assets:', assets);
     setCurrentStep(3);
