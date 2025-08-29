@@ -2,10 +2,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { 
-  TrendingUp, 
-  TrendingDown, 
-  BarChart3, 
+import {
+  TrendingUp,
+  TrendingDown,
+  BarChart3,
   Download,
   Calendar,
   DollarSign,
@@ -13,6 +13,7 @@ import {
   Shield,
   Zap
 } from "lucide-react";
+import { ReportDownload } from "./report-download";
 
 interface BacktestResult {
   id: string;
@@ -240,10 +241,7 @@ export function BacktestResults({ results = mockResults }: BacktestResultsProps)
                   <BarChart3 className="w-4 h-4 mr-2" />
                   Ver Gráficos
                 </Button>
-                <Button variant="outline" size="sm">
-                  <Download className="w-4 h-4 mr-2" />
-                  Tear Sheet
-                </Button>
+                <ReportDownload runId={result.id} />
                 <Button variant="outline" size="sm">
                   <Activity className="w-4 h-4 mr-2" />
                   Análise Detalhada
