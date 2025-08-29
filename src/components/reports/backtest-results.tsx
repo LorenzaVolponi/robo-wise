@@ -83,14 +83,14 @@ interface BacktestResultsProps {
 }
 
 export function BacktestResults({ results = mockResults }: BacktestResultsProps) {
-  const getStatusBadge = (status: string) => {
-    const variants = {
+  const getStatusBadge = (status: BacktestResult['status']) => {
+    const variants: Record<BacktestResult['status'], 'success' | 'warning' | 'destructive'> = {
       completed: 'success',
       running: 'warning',
       failed: 'destructive'
     };
     return (
-      <Badge variant={variants[status as keyof typeof variants] as any}>
+      <Badge variant={variants[status]}>
         {status === 'completed' ? 'Concluído' : 
          status === 'running' ? 'Executando' : 'Falha'}
       </Badge>

@@ -26,6 +26,7 @@ interface Asset {
   sector: string;
 }
 
+type PortfolioKey = 'conservative' | 'moderate' | 'aggressive';
 const modelPortfolios = {
   conservative: {
     name: "Conservador",
@@ -79,7 +80,7 @@ const modelPortfolios = {
 };
 
 interface PortfolioSimulationProps {
-  riskProfile: 'conservative' | 'moderate' | 'aggressive';
+  riskProfile: PortfolioKey;
   onRunBacktest: (assets: Asset[]) => void;
 }
 
@@ -142,26 +143,29 @@ export function PortfolioSimulation({ riskProfile, onRunBacktest }: PortfolioSim
     <div className="max-w-6xl mx-auto space-y-6">
       {/* Portfolio Selection */}
       <div className="grid md:grid-cols-3 gap-4">
-        {Object.entries(modelPortfolios).map(([key, portfolio]) => (
-          <Card 
-            key={key}
-            className={`cursor-pointer transition-smooth hover:shadow-glow ${
-              selectedPortfolio === key 
-                ? 'ring-2 ring-primary bg-gradient-card' 
-                : 'hover:border-primary/50'
-            }`}
-            onClick={() => setSelectedPortfolio(key as any)}
-          >
-            <CardHeader className="text-center">
-              <div className={`w-12 h-12 mx-auto rounded-full bg-primary/10 flex items-center justify-center mb-2 ${portfolio.color}`}>
-                {portfolio.icon}
-              </div>
-              <CardTitle className="text-lg">{portfolio.name}</CardTitle>
-              <CardDescription>{portfolio.description}</CardDescription>
-            </CardHeader>
-          </Card>
-        ))}
-      </div>
+        {(Object.keys(modelPortfolios) as PortfolioKey[]).map((key) => {
+            const portfolio = modelPortfolios[key];
+            return (
+              <Card
+                key={key}
+                className={`cursor-pointer transition-smooth hover:shadow-glow ${
+                  selectedPortfolio === key
+                    ? 'ring-2 ring-primary bg-gradient-card'
+                    : 'hover:border-primary/50'
+                }`}
+                onClick={() => setSelectedPortfolio(key)}
+              >
+                <CardHeader className="text-center">
+                  <div className={`w-12 h-12 mx-auto rounded-full bg-primary/10 flex items-center justify-center mb-2 ${portfolio.color}`}>
+                    {portfolio.icon}
+                  </div>
+                  <CardTitle className="text-lg">{portfolio.name}</CardTitle>
+                  <CardDescription>{portfolio.description}</CardDescription>
+                </CardHeader>
+              </Card>
+            );
+          })}
+        </div>
 
       <Tabs defaultValue="composition" className="w-full">
         <TabsList className="grid w-full grid-cols-3">

@@ -24,7 +24,7 @@ const Index = () => {
     setCurrentStep(2);
   };
 
-  const handleRunBacktest = (assets: any[]) => {
+  const handleRunBacktest = (assets: unknown[]) => {
     // Simulate backtest execution
     console.log('Running backtest with assets:', assets);
     setCurrentStep(3);
