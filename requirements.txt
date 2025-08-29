@@ -9,3 +9,10 @@ yfinance
 httpx
 ipython
 pytest-mock
+vectorbt
+backtrader
+bt
+freqtrade
+lumibot
+nautilus-trader
+lean
