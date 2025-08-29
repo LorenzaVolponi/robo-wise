@@ -15,6 +15,11 @@ class BuyAndHold(Strategy):
 
 
 def sample_data():
+    """Return a small OHLCV dataset indexed by datetime.
+
+    Using a :class:`~pandas.DatetimeIndex` mirrors real market data and avoids
+    warnings from the ``backtesting`` library about non-datetime indices.
+    """
     return pd.DataFrame(
         {
             "Open": [1, 2, 3, 4, 5],
@@ -22,7 +27,8 @@ def sample_data():
             "Low": [1, 2, 3, 4, 5],
             "Close": [1, 2, 3, 4, 5],
             "Volume": [100, 100, 100, 100, 100],
-        }
+        },
+        index=pd.date_range("2020-01-01", periods=5, freq="D"),
     )
 
 

@@ -45,6 +45,10 @@ class BacktestEngine:
             Equity curve and trade list produced by the simulation.
         """
 
+        # Ensure open positions are closed at the end of the simulation so that
+        # statistics such as profit and trade count remain consistent.
+        kwargs.setdefault("finalize_trades", True)
+
         bt = Backtest(
             data,
             strategy,
