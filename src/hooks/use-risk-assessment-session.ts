@@ -74,6 +74,7 @@ export function useRiskAssessmentSession(totalQuestions: number) {
   return {
     currentQuestion,
     answers,
+    log,
     answerQuestion,
     nextQuestion,
     previousQuestion,

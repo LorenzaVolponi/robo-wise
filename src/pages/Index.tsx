@@ -1,17 +1,14 @@
-import { useState } from "react";
 import { Navigation } from "@/components/ui/navigation";
 import { RiskAssessment } from "@/components/onboarding/risk-assessment";
 import { PortfolioSimulation } from "@/components/portfolio/portfolio-simulation";
 import { BacktestResults } from "@/components/reports/backtest-results";
 import { StrategyComparison } from "@/components/comparison/strategy-comparison";
 import { RiskManagement } from "@/components/risk/risk-management";
-import { Documentation } from "@/pages/Documentation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { TrendingUp, Shield, BarChart3, Sparkles } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
-
-type RiskProfile = 'conservative' | 'moderate' | 'aggressive';
+import { useOnboardingSession, type RiskProfile } from "@/hooks/use-onboarding-session";
 
 interface BacktestAsset {
   symbol: string;
@@ -19,9 +16,15 @@ interface BacktestAsset {
 }
 
 const Index = () => {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [riskProfile, setRiskProfile] = useState<RiskProfile | null>(null);
-  const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(false);
+  const {
+    currentStep,
+    setCurrentStep,
+    riskProfile,
+    setRiskProfile,
+    hasCompletedOnboarding,
+    setHasCompletedOnboarding,
+    resetOnboarding,
+  } = useOnboardingSession();
 
   const handleRiskProfileComplete = (profile: RiskProfile) => {
     setRiskProfile(profile);
@@ -193,14 +196,10 @@ const Index = () => {
                   </p>
                 </div>
                 <div className="ml-auto">
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     size="sm"
-                    onClick={() => {
-                      setHasCompletedOnboarding(false);
-                      setRiskProfile(null);
-                      setCurrentStep(1);
-                    }}
+                    onClick={resetOnboarding}
                   >
                     Refazer Análise
                   </Button>
