@@ -1,17 +1,18 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { 
-  Book, 
-  Code, 
-  Database, 
+import {
+  Book,
+  Code,
+  Database,
   GitBranch,
   Server,
   Zap,
   ExternalLink,
   FileText,
   Settings,
-  Play
+  Play,
+  Shield
 } from "lucide-react";
 
 export function Documentation() {
@@ -376,7 +377,32 @@ export function Documentation() {
             </div>
           </div>
         </CardContent>
+        </Card>
+
+      {/* Compliance Notice */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Shield className="w-5 h-5" />
+            Conformidade e Riscos
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-2 text-sm text-muted-foreground">
+          <p>
+            As informações fornecidas têm caráter educacional e não constituem
+            recomendação de investimento.
+          </p>
+          <p>
+            Rentabilidade passada não representa garantia de rentabilidade
+            futura.
+          </p>
+          <p>
+            A plataforma observa as diretrizes da CVM 19/21 e da SEC Marketing
+            Rule 206(4)-1.
+          </p>
+        </CardContent>
       </Card>
-    </div>
-  );
-}
+
+      </div>
+    );
+  }

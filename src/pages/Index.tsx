@@ -24,7 +24,12 @@ const Index = () => {
     setCurrentStep(2);
   };
 
-  const handleRunBacktest = (assets: any[]) => {
+  interface AssetInput {
+    symbol: string;
+    allocation: number;
+  }
+
+  const handleRunBacktest = (assets: AssetInput[]) => {
     // Simulate backtest execution
     console.log('Running backtest with assets:', assets);
     setCurrentStep(3);

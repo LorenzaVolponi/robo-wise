@@ -1,5 +1,9 @@
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import { createRoot } from 'react-dom/client';
+import App from './App.tsx';
+import './index.css';
+import { initTelemetry } from './lib/telemetry';
 
-createRoot(document.getElementById("root")!).render(<App />);
+// Initialize observability tools like Sentry and OpenTelemetry.
+initTelemetry();
+
+createRoot(document.getElementById('root')!).render(<App />);

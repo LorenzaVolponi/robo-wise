@@ -44,16 +44,34 @@ const questions: Question[] = [
       { value: "buy_more", label: "Compraria mais", score: 3 }
     ]
   },
-  {
-    id: "experience",
-    question: "Qual é a sua experiência com investimentos?",
-    options: [
-      { value: "beginner", label: "Iniciante", score: 1 },
-      { value: "intermediate", label: "Intermediário", score: 2 },
-      { value: "experienced", label: "Experiente", score: 3 }
-    ]
-  }
-];
+    {
+      id: "experience",
+      question: "Qual é a sua experiência com investimentos?",
+      options: [
+        { value: "beginner", label: "Iniciante", score: 1 },
+        { value: "intermediate", label: "Intermediário", score: 2 },
+        { value: "experienced", label: "Experiente", score: 3 }
+      ]
+    },
+    {
+      id: "drawdown_tolerance",
+      question: "Qual a perda máxima em 1 ano você toleraria?",
+      options: [
+        { value: "five", label: "Até 5%", score: 1 },
+        { value: "fifteen", label: "Entre 5% e 15%", score: 2 },
+        { value: "more", label: "Mais de 15%", score: 3 }
+      ]
+    },
+    {
+      id: "liquidity_need",
+      question: "Quão importante é a liquidez para você?",
+      options: [
+        { value: "high", label: "Preciso resgatar rapidamente", score: 1 },
+        { value: "medium", label: "Posso esperar alguns meses", score: 2 },
+        { value: "low", label: "Posso manter por anos", score: 3 }
+      ]
+    }
+  ];
 
 interface RiskAssessmentProps {
   onComplete: (profile: 'conservative' | 'moderate' | 'aggressive') => void;
@@ -95,9 +113,9 @@ export function RiskAssessment({ onComplete }: RiskAssessmentProps) {
     }, 0);
 
     let profile: 'conservative' | 'moderate' | 'aggressive';
-    if (totalScore <= 6) {
+    if (totalScore <= 9) {
       profile = 'conservative';
-    } else if (totalScore <= 9) {
+    } else if (totalScore <= 13) {
       profile = 'moderate';
     } else {
       profile = 'aggressive';
