@@ -3,6 +3,9 @@ import { Navigation } from "@/components/ui/navigation";
 import { RiskAssessment } from "@/components/onboarding/risk-assessment";
 import { PortfolioSimulation } from "@/components/portfolio/portfolio-simulation";
 import { BacktestResults } from "@/components/reports/backtest-results";
+import { StrategyComparison } from "@/components/comparison/strategy-comparison";
+import { RiskManagement } from "@/components/risk/risk-management";
+import { Documentation } from "@/pages/Documentation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { TrendingUp, Shield, BarChart3, Sparkles } from "lucide-react";
@@ -230,9 +233,21 @@ const Index = () => {
           </div>
         )}
 
-        {currentStep === 3 && (
+        {currentStep === 4 && (
           <div>
-            <BacktestResults />
+            <StrategyComparison />
+          </div>
+        )}
+
+        {currentStep === 5 && (
+          <div>
+            <RiskManagement />
+          </div>
+        )}
+
+        {currentStep === 6 && (
+          <div>
+            <Documentation />
           </div>
         )}
       </div>

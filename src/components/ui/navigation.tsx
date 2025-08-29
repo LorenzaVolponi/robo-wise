@@ -9,7 +9,9 @@ interface NavigationProps {
 const steps = [
   { id: 1, label: "Onboarding", description: "Perfil de risco" },
   { id: 2, label: "Simulação", description: "Carteira modelo" },
-  { id: 3, label: "Relatórios", description: "Análise de resultados" }
+  { id: 3, label: "Relatórios", description: "Análise de resultados" },
+  { id: 4, label: "Comparação", description: "Estratégias" },
+  { id: 5, label: "Risco", description: "Gestão avançada" }
 ];
 
 export function Navigation({ currentStep, onStepChange }: NavigationProps) {
