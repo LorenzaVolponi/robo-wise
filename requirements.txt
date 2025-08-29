@@ -1,0 +1,11 @@
+backtesting
+fastapi
+numpy
+pandas
+PyPortfolioOpt
+quantstats
+scipy
+yfinance
+httpx
+ipython
+pytest-mock
