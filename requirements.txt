@@ -6,3 +6,6 @@ PyPortfolioOpt
 quantstats
 scipy
 yfinance
+httpx
+ipython
+pytest-mock
