@@ -5,7 +5,6 @@ import { PortfolioSimulation } from "@/components/portfolio/portfolio-simulation
 import { BacktestResults } from "@/components/reports/backtest-results";
 import { StrategyComparison } from "@/components/comparison/strategy-comparison";
 import { RiskManagement } from "@/components/risk/risk-management";
-import { Documentation } from "@/pages/Documentation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { TrendingUp, Shield, BarChart3, Sparkles } from "lucide-react";
@@ -18,6 +17,11 @@ const Index = () => {
   const [riskProfile, setRiskProfile] = useState<RiskProfile | null>(null);
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(false);
 
+  const handleStepChange = (step: number) => {
+    if (!hasCompletedOnboarding && step > 1) return;
+    setCurrentStep(step);
+  };
+
   const handleRiskProfileComplete = (profile: RiskProfile) => {
     setRiskProfile(profile);
     setHasCompletedOnboarding(true);
@@ -27,7 +31,7 @@ const Index = () => {
   const handleRunBacktest = (assets: any[]) => {
     // Simulate backtest execution
     console.log('Running backtest with assets:', assets);
-    setCurrentStep(3);
+    handleStepChange(3);
   };
 
   const getRiskProfileInfo = (profile: RiskProfile) => {
@@ -58,7 +62,11 @@ const Index = () => {
   if (!hasCompletedOnboarding && currentStep === 0) {
     return (
       <div className="min-h-screen bg-gradient-hero">
-        <Navigation currentStep={currentStep} onStepChange={setCurrentStep} />
+        <Navigation
+          currentStep={currentStep}
+          onStepChange={handleStepChange}
+          hasCompletedOnboarding={hasCompletedOnboarding}
+        />
         
         {/* Hero Section */}
         <div className="relative">
@@ -89,7 +97,7 @@ const Index = () => {
                   <Button 
                     size="lg" 
                     className="bg-gradient-primary hover:opacity-90 text-primary-foreground shadow-glow transition-smooth"
-                    onClick={() => setCurrentStep(1)}
+                    onClick={() => handleStepChange(1)}
                   >
                     <TrendingUp className="w-5 h-5 mr-2" />
                     Começar Análise
@@ -150,7 +158,7 @@ const Index = () => {
                         Responda algumas perguntas para identificarmos seu perfil de risco e objetivos de investimento.
                       </p>
                       <Button 
-                        onClick={() => setCurrentStep(1)}
+                        onClick={() => handleStepChange(1)}
                         className="bg-gradient-primary hover:opacity-90"
                       >
                         Iniciar Questionário
@@ -168,7 +176,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation currentStep={currentStep} onStepChange={setCurrentStep} />
+      <Navigation
+        currentStep={currentStep}
+        onStepChange={handleStepChange}
+        hasCompletedOnboarding={hasCompletedOnboarding}
+      />
       
       <div className="container mx-auto px-4 py-8">
         {/* Profile Header (when onboarding completed) */}
@@ -194,7 +206,7 @@ const Index = () => {
                     onClick={() => {
                       setHasCompletedOnboarding(false);
                       setRiskProfile(null);
-                      setCurrentStep(1);
+                      handleStepChange(1);
                     }}
                   >
                     Refazer Análise

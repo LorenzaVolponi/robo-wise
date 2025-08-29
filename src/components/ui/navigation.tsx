@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 interface NavigationProps {
   currentStep: number;
   onStepChange: (step: number) => void;
+  hasCompletedOnboarding: boolean;
 }
 
 const steps = [
@@ -14,7 +15,7 @@ const steps = [
   { id: 5, label: "Risco", description: "Gestão avançada" }
 ];
 
-export function Navigation({ currentStep, onStepChange }: NavigationProps) {
+export function Navigation({ currentStep, onStepChange, hasCompletedOnboarding }: NavigationProps) {
   return (
     <nav className="border-b border-border bg-card/50 backdrop-blur-sm">
       <div className="container mx-auto px-4">
@@ -34,6 +35,7 @@ export function Navigation({ currentStep, onStepChange }: NavigationProps) {
                 key={step.id}
                 variant={currentStep === step.id ? "default" : "ghost"}
                 onClick={() => onStepChange(step.id)}
+                disabled={!hasCompletedOnboarding && step.id > 1}
                 className={cn(
                   "flex flex-col items-center h-auto py-2 px-4 transition-smooth",
                   currentStep === step.id && "bg-gradient-primary text-primary-foreground shadow-glow"
