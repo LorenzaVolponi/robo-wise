@@ -13,7 +13,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer
+  ResponsiveContainer, TooltipProps
 } from 'recharts';
 
 interface PerformanceChartProps {
@@ -31,14 +31,14 @@ export function PerformanceChart({
   height = 300, 
   showBenchmark = false 
 }: PerformanceChartProps) {
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-card border border-border rounded-lg p-3 shadow-card">
           <p className="text-sm font-medium mb-2">{label}</p>
-          {payload.map((entry: any, index: number) => (
+          {payload.map((entry, index) => (
             <p key={index} className="text-sm" style={{ color: entry.color }}>
-              {entry.name}: {entry.value.toFixed(2)}%
+              {entry.name}: {(entry.value as number).toFixed(2)}%
             </p>
           ))}
         </div>
@@ -120,14 +120,14 @@ export function AllocationChart({ data, height = 300 }: AllocationChartProps) {
     'hsl(var(--accent))'
   ];
 
-  const CustomTooltip = ({ active, payload }: any) => {
+  const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
     if (active && payload && payload.length) {
-      const data = payload[0].payload;
+      const datum = payload[0].payload as { name: string; sector: string; value: number };
       return (
         <div className="bg-card border border-border rounded-lg p-3 shadow-card">
-          <p className="font-medium">{data.name}</p>
-          <p className="text-sm text-muted-foreground">{data.sector}</p>
-          <p className="text-sm font-medium">{data.value.toFixed(1)}%</p>
+          <p className="font-medium">{datum.name}</p>
+          <p className="text-sm text-muted-foreground">{datum.sector}</p>
+          <p className="text-sm font-medium">{datum.value.toFixed(1)}%</p>
         </div>
       );
     }
@@ -167,14 +167,14 @@ interface MetricsComparisonProps {
 }
 
 export function MetricsComparison({ data, height = 300 }: MetricsComparisonProps) {
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-card border border-border rounded-lg p-3 shadow-card">
           <p className="text-sm font-medium mb-2">{label}</p>
-          {payload.map((entry: any, index: number) => (
+          {payload.map((entry, index) => (
             <p key={index} className="text-sm" style={{ color: entry.color }}>
-              {entry.name}: {entry.value.toFixed(2)}
+              {entry.name}: {(entry.value as number).toFixed(2)}
             </p>
           ))}
         </div>

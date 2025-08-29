@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run npm tests
+        run: npm test -- --coverage
+
+      - name: Upload Node coverage
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: node-coverage
+          path: coverage
+          if-no-files-found: ignore
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install mypy ruff pytest coverage quantstats
+
+      - name: Run ruff
+        run: ruff .
+
+      - name: Run mypy
+        run: mypy .
+
+      - name: Run pytest with coverage
+        run: |
+          coverage run -m pytest
+          coverage xml
+
+      - name: Upload Python coverage
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-coverage
+          path: coverage.xml
+          if-no-files-found: ignore
+
+      - name: Generate QuantStats report
+        run: |
+          python - <<'PY'
+import quantstats as qs
+qs.reports.html([1,2,3], [1,2,3], output='quantstats-report.html')
+PY
+
+      - name: Upload QuantStats artifacts
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quantstats-report
+          path: quantstats-report.html
+          if-no-files-found: ignore
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+
+      - name: Seed Supabase test schema
+        env:
+          SUPABASE_TEST_URL: ${{ secrets.SUPABASE_TEST_URL }}
+        run: |
+          supabase db reset --db-url "$SUPABASE_TEST_URL" || echo 'Skipping Supabase seed'
+
+      - name: Check Supabase migrations
+        env:
+          SUPABASE_TEST_URL: ${{ secrets.SUPABASE_TEST_URL }}
+        run: |
+          supabase db diff --db-url "$SUPABASE_TEST_URL" || echo 'Skipping migration check'

@@ -123,7 +123,7 @@ export function RiskManagement() {
     }
   ]);
 
-  const handleControlChange = (id: string, field: string, value: any) => {
+  const handleControlChange = (id: string, field: string, value: string | number | boolean) => {
     setRiskControls(prev => 
       prev.map(control => 
         control.id === id 
