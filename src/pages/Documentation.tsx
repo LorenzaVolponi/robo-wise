@@ -14,7 +14,7 @@ import {
   Play
 } from "lucide-react";
 
-export function Documentation() {
+export default function Documentation() {
   return (
     <div className="max-w-6xl mx-auto space-y-8">
       {/* Header */}
