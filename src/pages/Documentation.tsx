@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Navigation } from "@/components/ui/navigation";
 import { 
   Book, 
   Code, 
@@ -16,7 +17,9 @@ import {
 
 export default function Documentation() {
   return (
-    <div className="max-w-6xl mx-auto space-y-8">
+    <>
+      <Navigation />
+      <div className="max-w-6xl mx-auto space-y-8">
       {/* Header */}
       <div className="text-center space-y-4">
         <h1 className="text-4xl font-bold">Documentação</h1>
@@ -378,5 +381,6 @@ export default function Documentation() {
         </CardContent>
       </Card>
     </div>
+    </>
   );
 }

@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 interface NavigationProps {
-  currentStep: number;
-  onStepChange: (step: number) => void;
+  currentStep?: number;
+  onStepChange?: (step: number) => void;
 }
 
 const steps = [
@@ -29,23 +30,34 @@ export function Navigation({ currentStep, onStepChange }: NavigationProps) {
           </div>
           
           <div className="hidden md:flex items-center space-x-1">
-            {steps.map((step) => (
-              <Button
-                key={step.id}
-                variant={currentStep === step.id ? "default" : "ghost"}
-                onClick={() => onStepChange(step.id)}
-                className={cn(
-                  "flex flex-col items-center h-auto py-2 px-4 transition-smooth",
-                  currentStep === step.id && "bg-gradient-primary text-primary-foreground shadow-glow"
-                )}
-              >
-                <span className="font-medium text-xs">{step.label}</span>
-                <span className="text-xs opacity-80">{step.description}</span>
-              </Button>
-            ))}
+            {typeof currentStep !== "undefined" && onStepChange &&
+              steps.map((step) => (
+                <Button
+                  key={step.id}
+                  variant={currentStep === step.id ? "default" : "ghost"}
+                  onClick={() => onStepChange(step.id)}
+                  className={cn(
+                    "flex flex-col items-center h-auto py-2 px-4 transition-smooth",
+                    currentStep === step.id &&
+                      "bg-gradient-primary text-primary-foreground shadow-glow"
+                  )}
+                >
+                  <span className="font-medium text-xs">{step.label}</span>
+                  <span className="text-xs opacity-80">{step.description}</span>
+                </Button>
+              ))}
           </div>
           
           <div className="flex items-center space-x-2">
+            <Button asChild variant="ghost">
+              <Link to="/compare">Comparar</Link>
+            </Button>
+            <Button asChild variant="ghost">
+              <Link to="/risk">Risco</Link>
+            </Button>
+            <Button asChild variant="ghost">
+              <Link to="/docs">Docs</Link>
+            </Button>
             <Button variant="outline" size="sm">
               Ajuda
             </Button>
