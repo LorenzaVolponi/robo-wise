@@ -1,14 +1,37 @@
+import { lazy, Suspense, useCallback } from "react";
 import { Navigation } from "@/components/ui/navigation";
-import { RiskAssessment } from "@/components/onboarding/risk-assessment";
-import { PortfolioSimulation } from "@/components/portfolio/portfolio-simulation";
-import { BacktestResults } from "@/components/reports/backtest-results";
-import { StrategyComparison } from "@/components/comparison/strategy-comparison";
-import { RiskManagement } from "@/components/risk/risk-management";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { TrendingUp, Shield, BarChart3, Sparkles } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
 import { useOnboardingSession, type RiskProfile } from "@/hooks/use-onboarding-session";
+import { useNavigate } from "react-router-dom";
+
+const RiskAssessment = lazy(() =>
+  import("@/components/onboarding/risk-assessment").then((m) => ({
+    default: m.RiskAssessment,
+  }))
+);
+const PortfolioSimulation = lazy(() =>
+  import("@/components/portfolio/portfolio-simulation").then((m) => ({
+    default: m.PortfolioSimulation,
+  }))
+);
+const BacktestResults = lazy(() =>
+  import("@/components/reports/backtest-results").then((m) => ({
+    default: m.BacktestResults,
+  }))
+);
+const StrategyComparison = lazy(() =>
+  import("@/components/comparison/strategy-comparison").then((m) => ({
+    default: m.StrategyComparison,
+  }))
+);
+const RiskManagement = lazy(() =>
+  import("@/components/risk/risk-management").then((m) => ({
+    default: m.RiskManagement,
+  }))
+);
 
 interface BacktestAsset {
   symbol: string;
@@ -26,17 +49,37 @@ const Index = () => {
     resetOnboarding,
   } = useOnboardingSession();
 
-  const handleRiskProfileComplete = (profile: RiskProfile) => {
-    setRiskProfile(profile);
-    setHasCompletedOnboarding(true);
-    setCurrentStep(2);
-  };
+  const navigate = useNavigate();
 
-  const handleRunBacktest = (assets: BacktestAsset[]) => {
-    // Simulate backtest execution
-    console.log('Running backtest with assets:', assets);
-    setCurrentStep(3);
-  };
+  const handleStepChange = useCallback(
+    (step: number) => {
+      setCurrentStep(step);
+      if (step === 4) {
+        navigate("/compare");
+      } else if (step === 5) {
+        navigate("/risk");
+      }
+    },
+    [navigate, setCurrentStep]
+  );
+
+  const handleRiskProfileComplete = useCallback(
+    (profile: RiskProfile) => {
+      setRiskProfile(profile);
+      setHasCompletedOnboarding(true);
+      setCurrentStep(2);
+    },
+    [setRiskProfile, setHasCompletedOnboarding, setCurrentStep]
+  );
+
+  const handleRunBacktest = useCallback(
+    (assets: BacktestAsset[]) => {
+      // Simulate backtest execution
+      console.log("Running backtest with assets:", assets);
+      setCurrentStep(3);
+    },
+    [setCurrentStep]
+  );
 
   const getRiskProfileInfo = (profile: RiskProfile) => {
     const profiles = {
@@ -63,10 +106,10 @@ const Index = () => {
   };
 
   // Hero Section (when no onboarding completed)
-  if (!hasCompletedOnboarding && currentStep === 1) {
+  if (!hasCompletedOnboarding && currentStep === 0) {
     return (
       <div className="min-h-screen bg-gradient-hero">
-        <Navigation currentStep={currentStep} onStepChange={setCurrentStep} />
+        <Navigation currentStep={currentStep} onStepChange={handleStepChange} />
         
         {/* Hero Section */}
         <div className="relative">
@@ -176,7 +219,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation currentStep={currentStep} onStepChange={setCurrentStep} />
+      <Navigation currentStep={currentStep} onStepChange={handleStepChange} />
       
       <div className="container mx-auto px-4 py-8">
         {/* Profile Header (when onboarding completed) */}
@@ -218,7 +261,9 @@ const Index = () => {
                 Vamos identificar o melhor perfil de investimento para você
               </p>
             </div>
-            <RiskAssessment onComplete={handleRiskProfileComplete} />
+            <Suspense fallback={<div>Carregando...</div>}>
+              <RiskAssessment onComplete={handleRiskProfileComplete} />
+            </Suspense>
           </div>
         )}
 
@@ -230,28 +275,36 @@ const Index = () => {
                 Configure e simule sua carteira de investimentos
               </p>
             </div>
-            <PortfolioSimulation 
-              riskProfile={riskProfile} 
-              onRunBacktest={handleRunBacktest}
-            />
+            <Suspense fallback={<div>Carregando...</div>}>
+              <PortfolioSimulation
+                riskProfile={riskProfile}
+                onRunBacktest={handleRunBacktest}
+              />
+            </Suspense>
           </div>
         )}
 
         {currentStep === 3 && (
           <div>
-            <BacktestResults />
+            <Suspense fallback={<div>Carregando...</div>}>
+              <BacktestResults />
+            </Suspense>
           </div>
         )}
 
         {currentStep === 4 && (
           <div>
-            <StrategyComparison />
+            <Suspense fallback={<div>Carregando...</div>}>
+              <StrategyComparison />
+            </Suspense>
           </div>
         )}
 
         {currentStep === 5 && (
           <div>
-            <RiskManagement />
+            <Suspense fallback={<div>Carregando...</div>}>
+              <RiskManagement />
+            </Suspense>
           </div>
         )}
       </div>

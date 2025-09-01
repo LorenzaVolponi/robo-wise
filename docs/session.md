@@ -9,7 +9,7 @@ Este documento descreve como a avaliação de risco persiste e recupera o progre
 
 ## Onboarding
 - O passo atual, perfil calculado e status de conclusão são mantidos em `localStorage` com a chave `onboarding-state`.
-- A função `resetOnboarding` limpa esse estado e permite reiniciar o fluxo do começo.
+- A função `resetOnboarding` limpa esse estado, remove o progresso da avaliação de risco e permite reiniciar o fluxo do começo.
 
 ## Funções Disponíveis
 - **answerQuestion**: registra a resposta do usuário e atualiza o log.
