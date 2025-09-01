@@ -6,7 +6,7 @@ import { useOnboardingSession } from "@/hooks/use-onboarding-session";
 
 const Compare = () => {
   const navigate = useNavigate();
-  const { setCurrentStep } = useOnboardingSession();
+  const { currentStep, setCurrentStep } = useOnboardingSession();
 
   useEffect(() => {
     setCurrentStep(4);
@@ -23,7 +23,7 @@ const Compare = () => {
 
   return (
     <>
-      <Navigation currentStep={4} onStepChange={handleStepChange} />
+      <Navigation currentStep={currentStep} onStepChange={handleStepChange} />
       <StrategyComparison />
     </>
   );

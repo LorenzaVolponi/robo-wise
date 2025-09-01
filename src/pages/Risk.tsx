@@ -6,7 +6,7 @@ import { useOnboardingSession } from "@/hooks/use-onboarding-session";
 
 const Risk = () => {
   const navigate = useNavigate();
-  const { setCurrentStep } = useOnboardingSession();
+  const { currentStep, setCurrentStep } = useOnboardingSession();
 
   useEffect(() => {
     setCurrentStep(5);
@@ -23,7 +23,7 @@ const Risk = () => {
 
   return (
     <>
-      <Navigation currentStep={5} onStepChange={handleStepChange} />
+      <Navigation currentStep={currentStep} onStepChange={handleStepChange} />
       <RiskManagement />
     </>
   );
