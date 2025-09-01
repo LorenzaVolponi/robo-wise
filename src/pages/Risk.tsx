@@ -1,7 +1,7 @@
+import { useCallback, useEffect } from "react";
 import { RiskManagement } from "@/components/risk/risk-management";
 import { Navigation } from "@/components/ui/navigation";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { useOnboardingSession } from "@/hooks/use-onboarding-session";
 
 const Risk = () => {
@@ -12,14 +12,17 @@ const Risk = () => {
     setCurrentStep(5);
   }, [setCurrentStep]);
 
-  const handleStepChange = (step: number) => {
-    setCurrentStep(step);
-    if (step === 4) {
-      navigate("/compare");
-    } else if (step < 4) {
-      navigate("/");
-    }
-  };
+  const handleStepChange = useCallback(
+    (step: number) => {
+      setCurrentStep(step);
+      if (step === 4) {
+        navigate("/compare");
+      } else if (step < 4) {
+        navigate("/");
+      }
+    },
+    [navigate, setCurrentStep]
+  );
 
   return (
     <>
