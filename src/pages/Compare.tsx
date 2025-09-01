@@ -4,7 +4,7 @@ import { Navigation } from "@/components/ui/navigation";
 const Compare = () => {
   return (
     <>
-      <Navigation />
+      <Navigation currentStep={4} onStepChange={() => {}} />
       <StrategyComparison />
     </>
   );

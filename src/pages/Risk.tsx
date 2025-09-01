@@ -4,7 +4,7 @@ import { Navigation } from "@/components/ui/navigation";
 const Risk = () => {
   return (
     <>
-      <Navigation />
+      <Navigation currentStep={5} onStepChange={() => {}} />
       <RiskManagement />
     </>
   );
