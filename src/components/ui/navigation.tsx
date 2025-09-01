@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { NavLink } from "react-router-dom";
+import { memo, useMemo } from "react";
 
 interface NavigationProps {
   currentStep?: number;
@@ -15,7 +16,29 @@ const steps = [
   { id: 5, label: "Risco", description: "Gestão avançada" }
 ];
 
-export function Navigation({ currentStep, onStepChange }: NavigationProps) {
+export const Navigation = memo(function Navigation({
+  currentStep,
+  onStepChange,
+}: NavigationProps) {
+  const stepButtons = useMemo(() => {
+    if (typeof currentStep === "undefined" || !onStepChange) return null;
+    return steps.map((step) => (
+      <Button
+        key={step.id}
+        variant={currentStep === step.id ? "default" : "ghost"}
+        onClick={() => onStepChange(step.id)}
+        className={cn(
+          "flex flex-col items-center h-auto py-2 px-4 transition-smooth",
+          currentStep === step.id &&
+            "bg-gradient-primary text-primary-foreground shadow-glow"
+        )}
+      >
+        <span className="font-medium text-xs">{step.label}</span>
+        <span className="text-xs opacity-80">{step.description}</span>
+      </Button>
+    ));
+  }, [currentStep, onStepChange]);
+
   return (
     <nav className="border-b border-border bg-card/50 backdrop-blur-sm">
       <div className="container mx-auto px-4">
@@ -28,26 +51,9 @@ export function Navigation({ currentStep, onStepChange }: NavigationProps) {
               RoboAdvisor
             </span>
           </NavLink>
-          
-          <div className="hidden md:flex items-center space-x-1">
-            {typeof currentStep !== "undefined" && onStepChange &&
-              steps.map((step) => (
-                <Button
-                  key={step.id}
-                  variant={currentStep === step.id ? "default" : "ghost"}
-                  onClick={() => onStepChange(step.id)}
-                  className={cn(
-                    "flex flex-col items-center h-auto py-2 px-4 transition-smooth",
-                    currentStep === step.id &&
-                      "bg-gradient-primary text-primary-foreground shadow-glow"
-                  )}
-                >
-                  <span className="font-medium text-xs">{step.label}</span>
-                  <span className="text-xs opacity-80">{step.description}</span>
-                </Button>
-              ))}
-          </div>
-          
+
+          <div className="hidden md:flex items-center space-x-1">{stepButtons}</div>
+
           <div className="flex items-center space-x-2">
             <NavLink to="/compare">
               {({ isActive }) => (
@@ -74,4 +80,6 @@ export function Navigation({ currentStep, onStepChange }: NavigationProps) {
       </div>
     </nav>
   );
-}
+});
+
+Navigation.displayName = "Navigation";
