@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { TrendingUp, Shield, BarChart3, Sparkles } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
 import { useOnboardingSession, type RiskProfile } from "@/hooks/use-onboarding-session";
+import { useNavigate } from "react-router-dom";
 
 interface BacktestAsset {
   symbol: string;
@@ -25,6 +26,17 @@ const Index = () => {
     setHasCompletedOnboarding,
     resetOnboarding,
   } = useOnboardingSession();
+
+  const navigate = useNavigate();
+
+  const handleStepChange = (step: number) => {
+    setCurrentStep(step);
+    if (step === 4) {
+      navigate("/compare");
+    } else if (step === 5) {
+      navigate("/risk");
+    }
+  };
 
   const handleRiskProfileComplete = (profile: RiskProfile) => {
     setRiskProfile(profile);
@@ -66,7 +78,7 @@ const Index = () => {
   if (!hasCompletedOnboarding && currentStep === 1) {
     return (
       <div className="min-h-screen bg-gradient-hero">
-        <Navigation currentStep={currentStep} onStepChange={setCurrentStep} />
+        <Navigation currentStep={currentStep} onStepChange={handleStepChange} />
         
         {/* Hero Section */}
         <div className="relative">
@@ -176,7 +188,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation currentStep={currentStep} onStepChange={setCurrentStep} />
+      <Navigation currentStep={currentStep} onStepChange={handleStepChange} />
       
       <div className="container mx-auto px-4 py-8">
         {/* Profile Header (when onboarding completed) */}
