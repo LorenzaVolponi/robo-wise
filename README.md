@@ -39,6 +39,7 @@ npm run dev
 ## Running tests
 
 ```sh
+npm ci # install dependencies
 npm test
 ```
 
