@@ -69,6 +69,7 @@ export function RiskAssessment({ onComplete }: RiskAssessmentProps) {
     nextQuestion,
     previousQuestion,
     resetSession,
+    completeSession,
   } = useRiskAssessmentSession(questions.length);
   const [isComplete, setIsComplete] = useState(false);
   const { toast } = useToast();
@@ -116,7 +117,7 @@ export function RiskAssessment({ onComplete }: RiskAssessmentProps) {
     });
     setTimeout(() => {
       onComplete(profile);
-      resetSession();
+      completeSession();
     }, 1500);
   };
 

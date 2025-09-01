@@ -15,6 +15,7 @@ Este documento descreve como a avaliação de risco persiste e recupera o progre
 - **answerQuestion**: registra a resposta do usuário e atualiza o log.
 - **nextQuestion / previousQuestion**: navega entre as etapas e grava a ação no log.
 - **resetSession**: limpa o progresso e o log, permitindo iniciar uma nova sessão.
+- **completeSession**: registra a conclusão da avaliação e limpa os dados armazenados.
 
 ## Acessibilidade
 - Indicadores de progresso utilizam `role="status"` e `aria-live="polite"` para informar leitores de tela.

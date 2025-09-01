@@ -63,13 +63,24 @@ export function useRiskAssessmentSession(totalQuestions: number) {
     setLog(prev => [...prev, { timestamp: Date.now(), action: "previous" }]);
   };
 
-  const resetSession = () => {
-    setCurrentQuestion(0);
-    setAnswers({});
-    setLog(prev => [...prev, { timestamp: Date.now(), action: "reset" }]);
-    localStorage.removeItem(STORAGE_KEY);
-    localStorage.removeItem(LOG_KEY);
-  };
+    const clearStorage = () => {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(LOG_KEY);
+    };
+
+    const resetSession = () => {
+      setCurrentQuestion(0);
+      setAnswers({});
+      setLog(prev => [...prev, { timestamp: Date.now(), action: "reset" }]);
+      clearStorage();
+    };
+
+    const completeSession = () => {
+      setCurrentQuestion(0);
+      setAnswers({});
+      setLog(prev => [...prev, { timestamp: Date.now(), action: "complete" }]);
+      clearStorage();
+    };
 
   return {
     currentQuestion,
@@ -78,6 +89,7 @@ export function useRiskAssessmentSession(totalQuestions: number) {
     answerQuestion,
     nextQuestion,
     previousQuestion,
-    resetSession,
+      resetSession,
+      completeSession,
   };
 }
