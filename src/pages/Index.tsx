@@ -75,7 +75,7 @@ const Index = () => {
   };
 
   // Hero Section (when no onboarding completed)
-  if (!hasCompletedOnboarding && currentStep === 1) {
+  if (!hasCompletedOnboarding && currentStep === 0) {
     return (
       <div className="min-h-screen bg-gradient-hero">
         <Navigation currentStep={currentStep} onStepChange={handleStepChange} />

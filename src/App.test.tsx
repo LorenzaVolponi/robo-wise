@@ -1,7 +1,8 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import App from "./App";
 
 describe("App routing", () => {
+  beforeEach(() => localStorage.clear());
   const renderRoute = (path: string) => {
     window.history.pushState({}, "Test page", path);
     render(<App />);
@@ -35,6 +36,17 @@ describe("App routing", () => {
     renderRoute("/unknown");
     expect(
       await screen.findByText(/Page not found/i)
+    ).toBeInTheDocument();
+  });
+
+  it("starts onboarding when clicking the questionnaire button", async () => {
+    renderRoute("/");
+    await screen.findByRole("button", { name: /Iniciar Questionário/i });
+    fireEvent.click(screen.getByRole("button", { name: /Iniciar Questionário/i }));
+    expect(
+      await screen.findByRole("heading", {
+        name: /Análise de Perfil de Investidor/i,
+      })
     ).toBeInTheDocument();
   });
 });

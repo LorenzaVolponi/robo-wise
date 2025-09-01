@@ -10,7 +10,7 @@ interface OnboardingState {
 
 const STORAGE_KEY = "onboarding-state";
 
-export function useOnboardingSession(initialStep = 1) {
+export function useOnboardingSession(initialStep = 0) {
   const [state, setState] = useState<OnboardingState>({
     currentStep: initialStep,
     riskProfile: null,
