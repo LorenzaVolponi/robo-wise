@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 interface NavigationProps {
   currentStep?: number;
@@ -49,15 +49,23 @@ export function Navigation({ currentStep, onStepChange }: NavigationProps) {
           </div>
           
           <div className="flex items-center space-x-2">
-            <Button asChild variant="ghost">
-              <Link to="/compare">Comparar</Link>
-            </Button>
-            <Button asChild variant="ghost">
-              <Link to="/risk">Risco</Link>
-            </Button>
-            <Button asChild variant="ghost">
-              <Link to="/docs">Docs</Link>
-            </Button>
+            <NavLink to="/compare">
+              {({ isActive }) => (
+                <Button variant={isActive ? "default" : "ghost"}>
+                  Comparar
+                </Button>
+              )}
+            </NavLink>
+            <NavLink to="/risk">
+              {({ isActive }) => (
+                <Button variant={isActive ? "default" : "ghost"}>Risco</Button>
+              )}
+            </NavLink>
+            <NavLink to="/docs">
+              {({ isActive }) => (
+                <Button variant={isActive ? "default" : "ghost"}>Docs</Button>
+              )}
+            </NavLink>
             <Button variant="outline" size="sm">
               Ajuda
             </Button>
