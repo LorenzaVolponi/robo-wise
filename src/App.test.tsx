@@ -14,6 +14,23 @@ describe("App routing", () => {
     ).toBeInTheDocument();
   });
 
+  it("renders the compare page", async () => {
+    renderRoute("/compare");
+    expect(
+      await screen.findByRole("heading", {
+        level: 1,
+        name: /Comparação de Estratégias/i,
+      })
+    ).toBeInTheDocument();
+  });
+
+  it("renders the risk page", async () => {
+    renderRoute("/risk");
+    expect(
+      await screen.findByRole("heading", { name: /Controles de Risco/i })
+    ).toBeInTheDocument();
+  });
+
   it("renders a 404 for unknown routes", async () => {
     renderRoute("/unknown");
     expect(
